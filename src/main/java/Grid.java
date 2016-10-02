@@ -37,9 +37,22 @@ public class Grid {
         int countLiveCells = 0;
         int x = cell.getPosX();
         int y = cell.getPosY();
+        int lowerBoundX = x - 1;
+        int upperBoundX = x + 1;
+        int lowerBoundY = y - 1;
+        int upperBoundY = y + 1;
+        if (x == 0)
+            lowerBoundX = x;
+        if (x == grid.length - 1)
+            upperBoundX = x;
 
-        for (int i = x - 1; i <= x + 1; i++) {
-            for (int j = y - 1; j <= y + 1; j++) {
+        if (y == 0)
+            lowerBoundY = y;
+        if (y == grid[0].length - 1)
+            upperBoundY = y;
+
+        for (int i = lowerBoundX; i <= upperBoundX; i++) {
+            for (int j = lowerBoundY; j <= upperBoundY; j++) {
                 if (i == x && j == y)
                     continue;
                 if (grid[i][j].isAlive())
@@ -47,5 +60,34 @@ public class Grid {
             }
         }
         return countLiveCells;
+    }
+
+    public int countDeadNeighboursOf(Cell cell) {
+        int countDeadCells = 0;
+        int x = cell.getPosX();
+        int y = cell.getPosY();
+        int lowerBoundX = x - 1;
+        int upperBoundX = x + 1;
+        int lowerBoundY = y - 1;
+        int upperBoundY = y + 1;
+        if (x == 0)
+            lowerBoundX = x;
+        if (x == grid.length - 1)
+            upperBoundX = x;
+
+        if (y == 0)
+            lowerBoundY = y;
+        if (y == grid[0].length - 1)
+            upperBoundY = y;
+
+        for (int i = lowerBoundX; i <= upperBoundX; i++) {
+            for (int j = lowerBoundY; j <= upperBoundY; j++) {
+                if (i == x && j == y)
+                    continue;
+                if (!grid[i][j].isAlive())
+                    countDeadCells++;
+            }
+        }
+        return countDeadCells;
     }
 }

@@ -2,12 +2,10 @@
  * Created by alebaffa on 28/09/16.
  */
 public class LiveCell implements Cell {
-    private int x;
-    private int y;
+    private Coordinates coordinates = null;
 
     public LiveCell(int x, int y){
-        this.x = x;
-        this.y = y;
+        this.coordinates = new Coordinates(x, y);
     }
     @Override
     public boolean isAlive() {
@@ -16,11 +14,16 @@ public class LiveCell implements Cell {
 
     @Override
     public int getPosX() {
-        return x;
+        return coordinates.getX();
     }
 
     @Override
     public int getPosY() {
-        return y;
+        return coordinates.getY();
+    }
+
+    @Override
+    public Coordinates getCoordinates() {
+        return coordinates;
     }
 }
