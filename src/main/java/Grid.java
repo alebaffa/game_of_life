@@ -32,11 +32,11 @@ public class Grid {
     }
 
     public void setLive(Coordinates coordinates) {
-        grid[coordinates.getX()][coordinates.getY()] = new LiveCell(coordinates);
+        grid[coordinates.getPositionX()][coordinates.getPositionY()] = new LiveCell(coordinates);
     }
 
     public void setDead(Coordinates coordinates) {
-        grid[coordinates.getX()][coordinates.getY()] = new DeadCell(coordinates);
+        grid[coordinates.getPositionX()][coordinates.getPositionY()] = new DeadCell(coordinates);
     }
 
     public Map<String, Integer> countLiveAndDeadNeighboursOf(Coordinates coordinates) {
@@ -44,16 +44,16 @@ public class Grid {
         int countLiveCells = 0;
         Map<String, Integer> counters = new HashMap<String, Integer>();
 
-        int x = coordinates.getX();
-        int y = coordinates.getY();
-        int lowerBoundX = coordinates.getUpperLeftNeighbour();
-        int upperBoundX = coordinates.getUpperRightNeighbour(grid);
-        int lowerBoundY = coordinates.getLowerLeftNeighbour();
-        int upperBoundY = coordinates.getLowerRightNeighbour(grid);
+        int positionX = coordinates.getPositionX();
+        int positionY = coordinates.getPositionY();
+        int upperLeftNeighbour = coordinates.getUpperLeftNeighbour();
+        int upperRightNeighbour = coordinates.getUpperRightNeighbour(grid);
+        int lowerLeftNeighbour = coordinates.getLowerLeftNeighbour();
+        int lowerRightNeighbour = coordinates.getLowerRightNeighbour(grid);
 
-        for (int i = lowerBoundX; i <= upperBoundX; i++)
-            for (int j = lowerBoundY; j <= upperBoundY; j++) {
-                if (i == x && j == y)
+        for (int i = upperLeftNeighbour; i <= upperRightNeighbour; i++)
+            for (int j = lowerLeftNeighbour; j <= lowerRightNeighbour; j++) {
+                if (i == positionX && j == positionY)
                     continue;
                 if (!grid[i][j].isAlive())
                     countDeadCells++;
