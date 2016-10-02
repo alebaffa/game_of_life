@@ -12,14 +12,13 @@ public class Grid {
         grid = new Cell[rows][columns];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                grid[i][j] = new DeadCell(i, j);
+                setDead(new Coordinates(i, j));
             }
         }
     }
 
     public int sizeOfDeadCells() {
         int countDeadCells = 0;
-
         for (int i = 0; i <= rows - 1; i++) {
             for (int j = 0; j <= columns - 1; j++) {
                 if (!grid[i][j].isAlive())
@@ -29,65 +28,49 @@ public class Grid {
         return countDeadCells;
     }
 
-    public void setLive(Cell cell) {
-        grid[cell.getPosX()][cell.getPosY()] = cell;
+    public void setLive(Coordinates coordinates) {
+        grid[coordinates.getX()][coordinates.getY()] = new LiveCell(coordinates);
     }
 
-    public int countLiveNeighboursOf(Cell cell) {
+    public void setDead(Coordinates coordinates) {
+        grid[coordinates.getX()][coordinates.getY()] = new DeadCell(coordinates);
+    }
+
+    public int countLiveNeighboursOf(Coordinates coordinates) {
         int countLiveCells = 0;
-        int x = cell.getPosX();
-        int y = cell.getPosY();
-        int lowerBoundX = x - 1;
-        int upperBoundX = x + 1;
-        int lowerBoundY = y - 1;
-        int upperBoundY = y + 1;
-        if (x == 0)
-            lowerBoundX = x;
-        if (x == grid.length - 1)
-            upperBoundX = x;
+        int x = coordinates.getX();
+        int y = coordinates.getY();
+        int lowerBoundX = coordinates.getLowerBoundX();
+        int upperBoundX = coordinates.getUpperBoundX(grid);
+        int lowerBoundY = coordinates.getLowerBoundY();
+        int upperBoundY = coordinates.getUpperBoundY(grid);
 
-        if (y == 0)
-            lowerBoundY = y;
-        if (y == grid[0].length - 1)
-            upperBoundY = y;
-
-        for (int i = lowerBoundX; i <= upperBoundX; i++) {
+        for (int i = lowerBoundX; i <= upperBoundX; i++)
             for (int j = lowerBoundY; j <= upperBoundY; j++) {
                 if (i == x && j == y)
                     continue;
                 if (grid[i][j].isAlive())
                     countLiveCells++;
             }
-        }
         return countLiveCells;
     }
 
-    public int countDeadNeighboursOf(Cell cell) {
+    public int countDeadNeighboursOf(Coordinates coordinates) {
         int countDeadCells = 0;
-        int x = cell.getPosX();
-        int y = cell.getPosY();
-        int lowerBoundX = x - 1;
-        int upperBoundX = x + 1;
-        int lowerBoundY = y - 1;
-        int upperBoundY = y + 1;
-        if (x == 0)
-            lowerBoundX = x;
-        if (x == grid.length - 1)
-            upperBoundX = x;
+        int x = coordinates.getX();
+        int y = coordinates.getY();
+        int lowerBoundX = coordinates.getLowerBoundX();
+        int upperBoundX = coordinates.getUpperBoundX(grid);
+        int lowerBoundY = coordinates.getLowerBoundY();
+        int upperBoundY = coordinates.getUpperBoundY(grid);
 
-        if (y == 0)
-            lowerBoundY = y;
-        if (y == grid[0].length - 1)
-            upperBoundY = y;
-
-        for (int i = lowerBoundX; i <= upperBoundX; i++) {
+        for (int i = lowerBoundX; i <= upperBoundX; i++)
             for (int j = lowerBoundY; j <= upperBoundY; j++) {
                 if (i == x && j == y)
                     continue;
                 if (!grid[i][j].isAlive())
                     countDeadCells++;
             }
-        }
         return countDeadCells;
     }
 }

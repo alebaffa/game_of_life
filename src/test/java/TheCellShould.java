@@ -11,13 +11,13 @@ public class TheCellShould {
     public void have_zero_live_neighbours_when_the_only_live() {
         // Given
         Grid grid = new Grid(4, 5);
+        Coordinates coordinates = new Coordinates(2, 2);
 
         // When
-        Cell cell = new LiveCell(2, 2);
-        grid.setLive(cell);
+        grid.setLive(coordinates);
 
         // Then
-        assertThat(grid.countLiveNeighboursOf(cell), is(0));
+        assertThat(grid.countLiveNeighboursOf(coordinates), is(0));
     }
 
     @Test
@@ -26,15 +26,12 @@ public class TheCellShould {
         Grid grid = new Grid(3, 3);
 
         // When
-        Cell firstLiveCell = new LiveCell(0, 0);
-        Cell secondLiveCell = new LiveCell(0, 1);
-        Cell thirdLiveCell = new LiveCell(0, 2);
-        grid.setLive(firstLiveCell);
-        grid.setLive(secondLiveCell);
-        grid.setLive(thirdLiveCell);
+        grid.setLive(new Coordinates(0, 0));
+        grid.setLive(new Coordinates(0, 1));
+        grid.setLive(new Coordinates(0, 2));
 
         // Then
-        assertThat(grid.countLiveNeighboursOf(new DeadCell(1, 1)), is(3));
+        assertThat(grid.countLiveNeighboursOf(new Coordinates(1, 1)), is(3));
     }
 
     @Test
@@ -45,7 +42,7 @@ public class TheCellShould {
         // When
 
         // Then
-        assertThat(grid.countDeadNeighboursOf(new DeadCell(0, 0)), is(3));
+        assertThat(grid.countDeadNeighboursOf(new Coordinates(0, 0)), is(3));
     }
 
     @Test
@@ -54,15 +51,12 @@ public class TheCellShould {
         Grid grid = new Grid(3, 3);
 
         // When
-        Cell firstLiveCell = new LiveCell(0, 1);
-        Cell secondLiveCell = new LiveCell(1, 2);
-        Cell thirdLiveCell = new LiveCell(1, 1);
-        grid.setLive(firstLiveCell);
-        grid.setLive(secondLiveCell);
-        grid.setLive(thirdLiveCell);
+        grid.setLive(new Coordinates(0, 1));
+        grid.setLive(new Coordinates(1, 2));
+        grid.setLive(new Coordinates(1, 1));
 
         // Then
-        assertThat(grid.countLiveNeighboursOf(new DeadCell(0, 2)), is(3));
+        assertThat(grid.countLiveNeighboursOf(new Coordinates(0, 2)), is(3));
     }
 
     @Test
@@ -73,7 +67,7 @@ public class TheCellShould {
         // When
 
         // Then
-        assertThat(grid.countLiveNeighboursOf(new DeadCell(0, 0)), is(0));
+        assertThat(grid.countLiveNeighboursOf(new Coordinates(0, 1)), is(0));
     }
 
     @Test
@@ -84,6 +78,6 @@ public class TheCellShould {
         // When
 
         // Then
-        assertThat(grid.countDeadNeighboursOf(new DeadCell(0, 1)), is(5));
+        assertThat(grid.countDeadNeighboursOf(new Coordinates(0, 1)), is(5));
     }
 }

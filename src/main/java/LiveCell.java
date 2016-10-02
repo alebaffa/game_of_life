@@ -4,9 +4,10 @@
 public class LiveCell implements Cell {
     private Coordinates coordinates = null;
 
-    public LiveCell(int x, int y){
-        this.coordinates = new Coordinates(x, y);
+    public LiveCell(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
+
     @Override
     public boolean isAlive() {
         return true;

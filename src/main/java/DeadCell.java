@@ -4,8 +4,8 @@
 public class DeadCell implements Cell {
     private Coordinates coordinates = null;
 
-    public DeadCell(int x, int y){
-        this.coordinates = new Coordinates(x, y);
+    public DeadCell(Coordinates coordinates){
+        this.coordinates = coordinates;
     }
     @Override
     public boolean isAlive() {
