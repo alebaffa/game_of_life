@@ -13,16 +13,6 @@ public class DeadCell implements Cell {
     }
 
     @Override
-    public int getPosX() {
-        return coordinates.getX();
-    }
-
-    @Override
-    public int getPosY() {
-        return coordinates.getY();
-    }
-
-    @Override
     public Coordinates getCoordinates() {
         return coordinates;
     }

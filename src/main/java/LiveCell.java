@@ -7,20 +7,9 @@ public class LiveCell implements Cell {
     public LiveCell(Coordinates coordinates) {
         this.coordinates = coordinates;
     }
-
     @Override
     public boolean isAlive() {
         return true;
-    }
-
-    @Override
-    public int getPosX() {
-        return coordinates.getX();
-    }
-
-    @Override
-    public int getPosY() {
-        return coordinates.getY();
     }
 
     @Override

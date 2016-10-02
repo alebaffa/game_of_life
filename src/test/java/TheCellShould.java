@@ -1,5 +1,6 @@
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -17,7 +18,7 @@ public class TheCellShould {
         grid.setLive(coordinates);
 
         // Then
-        assertThat(grid.countLiveNeighboursOf(coordinates), is(0));
+        assertThat(getLiveCellsIn(grid, coordinates), is(0));
     }
 
     @Test
@@ -31,7 +32,7 @@ public class TheCellShould {
         grid.setLive(new Coordinates(0, 2));
 
         // Then
-        assertThat(grid.countLiveNeighboursOf(new Coordinates(1, 1)), is(3));
+        assertThat(getLiveCellsIn(grid, new Coordinates(1, 1)), is(3));
     }
 
     @Test
@@ -39,10 +40,17 @@ public class TheCellShould {
         // Given
         Grid grid = new Grid(3, 3);
 
-        // When
+        // Then
+        assertThat(getDeadCellsIn(grid, new Coordinates(0, 0)), is(3));
+    }
+
+    @Test
+    public void have_5_dead_neighbours_when_middle_up() {
+        // Given
+        Grid grid = new Grid(3, 3);
 
         // Then
-        assertThat(grid.countDeadNeighboursOf(new Coordinates(0, 0)), is(3));
+        assertThat(getDeadCellsIn(grid, new Coordinates(0, 1)), is(5));
     }
 
     @Test
@@ -56,7 +64,7 @@ public class TheCellShould {
         grid.setLive(new Coordinates(1, 1));
 
         // Then
-        assertThat(grid.countLiveNeighboursOf(new Coordinates(0, 2)), is(3));
+        assertThat(getLiveCellsIn(grid, new Coordinates(0, 2)), is(3));
     }
 
     @Test
@@ -64,20 +72,60 @@ public class TheCellShould {
         // Given
         Grid grid = new Grid(3, 3);
 
-        // When
-
         // Then
-        assertThat(grid.countLiveNeighboursOf(new Coordinates(0, 1)), is(0));
+        assertThat(getLiveCellsIn(grid, new Coordinates(0, 1)), is(0));
     }
 
     @Test
-    public void have_5_dead_neighbours_when_middle_up() {
+    public void live_in_next_generation_when_3_live_neighbours(){
         // Given
         Grid grid = new Grid(3, 3);
 
         // When
+        grid.setLive(new Coordinates(0, 0));
+        grid.setLive(new Coordinates(0, 1));
+        grid.setLive(new Coordinates(0, 2));
 
         // Then
-        assertThat(grid.countDeadNeighboursOf(new Coordinates(0, 1)), is(5));
+        assertThat(grid.calculateNextGenerationOf(new DeadCell(new Coordinates(1, 1))), is(instanceOf(LiveCell.class)));
+
+    }
+
+    @Test
+    public void die_in_next_generation_when_less_than_2_live_neighbours(){
+        // Given
+        Grid grid = new Grid(3, 3);
+
+        // When
+        grid.setLive(new Coordinates(0, 0));
+
+        // Then
+        assertThat(grid.calculateNextGenerationOf(new LiveCell(new Coordinates(1, 1))), is(instanceOf(DeadCell.class)));
+
+    }
+
+    @Test
+    public void die_in_next_generation_when_more_than_3_live_neighbours(){
+        // Given
+        Grid grid = new Grid(3, 3);
+
+        // When
+        grid.setLive(new Coordinates(0, 0));
+        grid.setLive(new Coordinates(0, 1));
+        grid.setLive(new Coordinates(0, 2));
+        grid.setLive(new Coordinates(1, 0));
+
+        // Then
+        assertThat(grid.calculateNextGenerationOf(new LiveCell(new Coordinates(1, 1))), is(instanceOf(DeadCell.class)));
+
+    }
+
+
+    private Integer getLiveCellsIn(Grid grid, Coordinates coordinates) {
+        return grid.countLiveAndDeadNeighboursOf(coordinates).get("live");
+    }
+
+    private Integer getDeadCellsIn(Grid grid, Coordinates coordinates) {
+        return grid.countLiveAndDeadNeighboursOf(coordinates).get("dead");
     }
 }

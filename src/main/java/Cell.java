@@ -3,7 +3,5 @@
  */
 public interface Cell {
     boolean isAlive();
-    int getPosX();
-    int getPosY();
     Coordinates getCoordinates();
 }

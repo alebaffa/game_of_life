@@ -23,28 +23,28 @@ public class Coordinates {
         return this.y;
     }
 
-    public int getLowerBoundX() {
+    public int getUpperLeftNeighbour() {
         lowerBoundX = x - 1;
         if (x == 0)
             lowerBoundX = x;
         return lowerBoundX;
     }
 
-    public int getUpperBoundX(Cell[][] grid) {
+    public int getUpperRightNeighbour(Cell[][] grid) {
         upperBoundX = x + 1;
         if (x == grid.length - 1)
             upperBoundX = x;
         return upperBoundX;
     }
 
-    public int getLowerBoundY() {
+    public int getLowerLeftNeighbour() {
         lowerBoundY = y - 1;
         if (y == 0)
             lowerBoundY = y;
         return lowerBoundY;
     }
 
-    public int getUpperBoundY(Cell[][] grid) {
+    public int getLowerRightNeighbour(Cell[][] grid) {
         upperBoundY = y + 1;
         if (y == grid[0].length - 1)
             upperBoundY = y;
